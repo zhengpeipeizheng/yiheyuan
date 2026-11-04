@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>颐和园 · 中国的世界文化遗产</title>
+<style>
+  html,body{margin:0;height:100%;background:#0e0b08;overflow:hidden;
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Songti SC",serif;
+    -webkit-font-smoothing:antialiased}
+  .slide{position:fixed;inset:0;display:none}
+  .slide.on{display:block}
+  .slide img,.slide video{width:100%;height:100%;object-fit:cover;display:block}
+  .shade{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(20,15,10,.82) 0%,rgba(20,15,10,.30) 32%,rgba(20,15,10,.02) 62%)}
+  .cap{position:absolute;left:6vw;bottom:9vh;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.85)}
+  .cap .t{font-size:4.6vw;font-weight:700;letter-spacing:.08em;line-height:1.12}
+  .cap .k{font-size:1.9vw;margin-top:1.4vh;opacity:.92;letter-spacing:.04em}
+  .page{position:fixed;right:2.2vw;bottom:2.4vh;color:#fff;opacity:.45;font-size:.95vw;
+    letter-spacing:.12em;pointer-events:none}
+  .hint{position:fixed;left:50%;bottom:4vh;transform:translateX(-50%);color:#fff;opacity:.7;
+    font-size:1vw;letter-spacing:.14em;pointer-events:none;transition:opacity .6s}
+  .hint.hide{opacity:0}
+  .nav{position:fixed;inset:0;display:flex}
+  .nav div{flex:1}
+  @media (max-width:700px){
+    .cap .t{font-size:9vw}.cap .k{font-size:4vw}.cap{bottom:12vh}
+  }
+</style>
+</head>
+<body>
+
+<div class="slide on">
+  <video src="vid/open.mp4" autoplay muted loop playsinline poster="img/map.png"></video>
+</div>
+
+<div class="slide">
+  <img src="img/panorama.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">颐和园</div><div class="k">中国的世界文化遗产 ｜ 四年级语文实践活动</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/1.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">长廊</div><div class="k">728 米 ｜ 273 间 ｜ 14000 多幅彩画</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/2.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">佛香阁</div><div class="k">41 米 ｜ 全园的中心</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/3.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">石舫</div><div class="k">一艘开不走的石头船</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/4.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">昆明湖</div><div class="k">把江南搬到北京</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/5.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">十七孔桥</div><div class="k">150 米 ｜ 544 只石狮 ｜ 冬至金光穿洞</div></div>
+</div>
+
+<div class="slide">
+  <img src="img/6.jpg" alt="">
+  <div class="shade"></div>
+  <div class="cap"><div class="t">谐趣园</div><div class="k">园中之园 ｜ 仿无锡寄畅园</div></div>
+</div>
+
+<div class="slide">
+  <video src="vid/end.mp4" autoplay muted loop playsinline poster="img/panorama.jpg"></video>
+</div>
+
+<div class="page" id="pg">1 / 9</div>
+<div class="hint" id="hint">按 → 或点右侧翻页 ｜ F 全屏</div>
+<div class="nav"><div onclick="go(-1)"></div><div onclick="go(1)"></div></div>
+
+<script>
+  var slides=document.querySelectorAll('.slide'), i=0;
+  var pg=document.getElementById('pg'), hint=document.getElementById('hint');
+  function show(n){
+    slides[i].classList.remove('on');
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides[i].classList.add('on');
+    pg.textContent=(i+1)+' / '+slides.length;
+    if(i>0) hint.classList.add('hide');
+    var v=slides[i].querySelector('video');
+    if(v){v.currentTime=0;v.play().catch(function(){});}
+  }
+  function go(d){show(i+d);}
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight',' ','PageDown','Enter'].indexOf(e.key)>=0){go(1);e.preventDefault();}
+    if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){go(-1);e.preventDefault();}
+    if(e.key==='Home'){show(0)}
+    if(e.key==='End'){show(slides.length-1)}
+    if(e.key==='f'||e.key==='F'){
+      if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+      else{document.exitFullscreen&&document.exitFullscreen();}
+    }
+  });
+  var t; document.addEventListener('touchstart',function(e){t=e.touches[0].clientX;});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-t;
+    if(Math.abs(dx)>50) go(dx<0?1:-1);
+  });
+</script>
+</body>
+</html>
