@@ -85,6 +85,9 @@
     pointer-events:none}
   .hint.hide{opacity:0}
 
+  .start{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.55);color:#fff;font-size:1.4vw;letter-spacing:.3em;cursor:pointer}
+  .start.hide{display:none}
   .tap{position:fixed;left:50%;top:36%;transform:translate(-50%,-50%);z-index:8;
     color:#fff;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.45);
     padding:1.4vh 2vw;font-size:1.05vw;letter-spacing:.22em;white-space:nowrap;
@@ -126,6 +129,7 @@
 
 <div class="brand">颐和园 · 中国的世界文化遗产</div>
 <div class="frame"></div>
+<div class="start" id="start">点击开始放映</div>
 <div class="tap" id="tap">轻触屏幕开始播放</div>
 
 <div class="slide s0 on">
@@ -143,7 +147,7 @@
 </div>
 <div class="slide s2">
   <div class="stage" style="background-image:url('img/海报-1.jpg')">
-    <video data-src="vid/s1.mp4" poster="img/海报-1.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s1.mp4" poster="img/海报-1.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -155,7 +159,7 @@
 </div>
 <div class="slide s3">
   <div class="stage" style="background-image:url('img/海报-2.jpg')">
-    <video data-src="vid/s2.mp4" poster="img/海报-2.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s2.mp4" poster="img/海报-2.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -167,7 +171,7 @@
 </div>
 <div class="slide s4">
   <div class="stage" style="background-image:url('img/海报-3.jpg')">
-    <video data-src="vid/s3.mp4" poster="img/海报-3.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s3.mp4" poster="img/海报-3.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -179,7 +183,7 @@
 </div>
 <div class="slide s5">
   <div class="stage" style="background-image:url('img/海报-4.jpg')">
-    <video data-src="vid/s4.mp4" poster="img/海报-4.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s4.mp4" poster="img/海报-4.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -191,7 +195,7 @@
 </div>
 <div class="slide s6">
   <div class="stage" style="background-image:url('img/海报-5.jpg')">
-    <video data-src="vid/s5.mp4" poster="img/海报-5.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s5.mp4" poster="img/海报-5.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -203,7 +207,7 @@
 </div>
 <div class="slide s7">
   <div class="stage" style="background-image:url('img/海报-6.jpg')">
-    <video data-src="vid/s6.mp4" poster="img/海报-6.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/s6.mp4" poster="img/海报-6.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -215,7 +219,7 @@
 </div>
 <div class="slide end">
   <div class="stage" style="background-image:url('img/海报-9.jpg')">
-    <video data-src="vid/end.mp4" poster="img/海报-9.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video data-src="vid/end.mp4" poster="img/海报-9.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
   </div>
   <div class="cap">
@@ -244,7 +248,7 @@
 
   function activate(k){
     var v=slides[k].querySelector('video'); if(!v) return;
-    v.muted = true; v.defaultMuted = true; v.setAttribute('muted','');
+    v.muted = false; v.volume = 1;
     if(!v.getAttribute('src')){ v.setAttribute('src', v.getAttribute('data-src')); }
     try{ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }catch(e){}
   }
@@ -325,9 +329,10 @@
     first.addEventListener('playing', function(){ playedOnce = true; if(tap) tap.classList.remove('show'); });
     first.addEventListener('pause', checkTap);
   }
-  ['click','touchstart','keydown'].forEach(function(ev){
-    document.addEventListener(ev, function(){ activate(i); }, {passive:true});
-  });
+  var startOv = document.getElementById('start');
+  if(startOv){ startOv.addEventListener('click', function(){
+    startOv.classList.add('hide'); activate(i);
+  }); }
   activate(0);
 </script>
 </body>
