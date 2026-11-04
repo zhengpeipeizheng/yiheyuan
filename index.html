@@ -5,63 +5,57 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>颐和园 · 中国的世界文化遗产</title>
 <style>
+  *{box-sizing:border-box}
   html,body{margin:0;height:100%;background:#000;overflow:hidden;
-    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Heiti SC",sans-serif;
     -webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+  .stage{position:absolute;top:0;left:0;width:100%;height:72%;background:#000;overflow:hidden}
+  .stage img,.stage video{position:absolute;top:0;left:0;width:100%;height:100%;
+    object-fit:contain;display:block}
+  .stage video{opacity:0;transition:opacity .4s}
+  .stage video.ready{opacity:1}
+  .veil{position:absolute;left:0;bottom:0;width:100%;height:26%;pointer-events:none;
+    background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0))}
 
-  .slide{position:fixed;inset:0;opacity:0;transition:opacity .7s cubic-bezier(.4,0,.2,1);
-    pointer-events:none;background:#000}
-  .slide.on{opacity:1;pointer-events:auto}
+  .ov{position:absolute;top:72%;left:0;right:0;bottom:0;opacity:0;
+    transition:opacity .6s;pointer-events:none;display:flex;flex-direction:column;
+    justify-content:center;padding:0 7.4vw}
+  .ov.on{opacity:1}
 
-  /* 画面占上方 72%，下方 28% 留给文字 */
-  .stage{position:absolute;top:0;left:0;width:100%;height:72%;overflow:hidden;background:#000}
-  .stage video{width:100%;height:100%;object-fit:contain;display:block}
-  .stage .veil{position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(to top,rgba(0,0,0,.55) 0%,rgba(0,0,0,.12) 18%,rgba(0,0,0,0) 34%)}
+  .idx{font-size:.72vw;letter-spacing:.5em;color:rgba(255,255,255,.42);margin-bottom:1.1vh}
+  .t1{font-family:"Songti SC","Source Han Serif SC","STSong",serif;font-weight:600;
+    font-size:3.3vw;letter-spacing:.16em;line-height:1.05;margin:0;color:#fff}
+  .bar{width:54px;height:1px;background:rgba(255,255,255,.45);margin:1.7vh 0 1.3vh}
+  .kw{font-size:1.02vw;letter-spacing:.17em;color:rgba(255,255,255,.72);margin:0}
 
-  .cap{position:absolute;left:7.4vw;right:7.4vw;top:72%;bottom:0;
-    display:flex;flex-direction:column;justify-content:center;color:#fff}
-  .cap .idx{font-size:.72vw;letter-spacing:.5em;color:rgba(255,255,255,.42);
-    font-weight:300;margin-bottom:1.1vh}
-  .cap h1{font-family:"Songti SC","Source Han Serif SC","STSong",serif;
-    font-size:3.3vw;font-weight:600;letter-spacing:.16em;line-height:1;margin:0;color:#fff}
-  .cap .bar{width:54px;height:1px;background:rgba(255,255,255,.45);margin:1.7vh 0 1.3vh}
-  .cap p{font-size:1.02vw;letter-spacing:.17em;color:rgba(255,255,255,.72);
-    margin:0;font-weight:300}
-
-  .brand{position:fixed;left:7.4vw;top:5.4vh;color:#fff;z-index:8;
-    font-size:.9vw;letter-spacing:.42em;opacity:.45;font-weight:300;pointer-events:none}
-
-  /* 首屏 */
-  .hero{position:absolute;left:8vw;top:36%;transform:translateY(-50%);color:#fff;z-index:4;
-    text-shadow:0 8px 44px rgba(0,0,0,.85)}
-  .hero .h1{font-family:"Songti SC","Source Han Serif SC","STSong",serif;
-    font-size:8.8vw;font-weight:600;letter-spacing:.2em;line-height:1;margin:0}
-  .hero .rule{width:6vw;height:1px;background:rgba(255,255,255,.5);margin:3vh 0 0}
-  .hero .h2{font-size:2.2vw;font-weight:300;letter-spacing:.42em;
-    margin-top:2.6vh;opacity:.92;padding-left:.2em}
-  .hero .label{font-size:.95vw;font-weight:300;letter-spacing:.3em;
-    color:rgba(255,255,255,.55);margin-top:4.5vh}
-  .hero .label span{opacity:.62;letter-spacing:.12em;margin-left:.7em}
-  .hero .team{font-size:1.05vw;font-weight:300;letter-spacing:.1em;
-    color:rgba(255,255,255,.95);margin-top:1.2vh;max-width:60vw;line-height:1.6}
-  .veil.hero-veil{background:
-    linear-gradient(to right,rgba(0,0,0,.86) 0%,rgba(0,0,0,.58) 30%,rgba(0,0,0,.22) 52%,rgba(0,0,0,0) 75%),
-    linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 40%)}
+  .brand{position:absolute;left:7.4vw;top:5.4vh;color:#fff;font-size:.9vw;
+    letter-spacing:.42em;opacity:.45;pointer-events:none}
   body.first .brand{opacity:0}
 
-  /* 结尾页 */
-  .end .cap{left:0;right:0;align-items:center;text-align:center;transform:translateY(-3.6vh)}
-  .end .cap h1{font-size:4vw}
-  .end .cap .bar{margin:1.8vh auto 1.2vh}
-  .end .cap .label{font-size:.9vw;font-weight:300;letter-spacing:.3em;
-    color:rgba(255,255,255,.55);margin-top:3vh}
-  .end .cap .label span{opacity:.62;letter-spacing:.12em;margin-left:.6em}
-  .end .cap .team{font-size:1.05vw;font-weight:300;letter-spacing:.1em;
-    color:rgba(255,255,255,.95);margin-top:1.2vh}
+  /* 首页 */
+  .hero{align-items:flex-start;justify-content:center}
+  .hero .h1{font-family:"Songti SC","Source Han Serif SC","STSong",serif;font-weight:600;
+    font-size:8.8vw;letter-spacing:.2em;line-height:1;margin:0;color:#fff}
+  .hero .rule{width:6vw;height:1px;background:rgba(255,255,255,.5);margin:3vh 0 0}
+  .hero .h2{font-size:2.2vw;letter-spacing:.42em;margin-top:2.6vh;
+    color:rgba(255,255,255,.92);font-weight:300}
+  .hero .label{font-size:.95vw;letter-spacing:.3em;color:rgba(255,255,255,.55);
+    margin-top:4.5vh;font-weight:300}
+  .hero .label span{opacity:.62;letter-spacing:.12em;margin-left:.7em}
+  .hero .team{font-size:1.05vw;letter-spacing:.1em;color:rgba(255,255,255,.95);
+    margin-top:1.2vh;line-height:1.6;font-weight:300}
 
-  .frame{position:fixed;inset:15px;border:1px solid rgba(255,255,255,.12);
-    pointer-events:none;z-index:9}
+  /* 结尾 */
+  .end{align-items:center;text-align:center;padding-bottom:5vh}
+  .end .t1{font-size:4vw}
+  .end .bar{width:54px;margin:1.8vh 0 1.2vh}
+  .end .label{font-size:.9vw;letter-spacing:.3em;color:rgba(255,255,255,.55);
+    margin-top:3vh;font-weight:300}
+  .end .label span{opacity:.62;letter-spacing:.12em;margin-left:.6em}
+  .end .team{font-size:1.05vw;letter-spacing:.1em;color:rgba(255,255,255,.95);
+    margin-top:1.2vh;font-weight:300}
+
+  .frame{position:fixed;inset:15px;border:1px solid rgba(255,255,255,.12);pointer-events:none;z-index:9}
   .zone{position:fixed;top:0;bottom:0;width:24%;cursor:pointer;z-index:6}
   .zone.l{left:0}.zone.r{right:0}
   .arrow{position:fixed;top:36%;transform:translateY(-50%);z-index:7;border:0;background:none;
@@ -71,7 +65,6 @@
   .arrow:hover{opacity:.62}
   .arrow.l{left:.4vw}.arrow.r{right:.4vw}
   .arrow.off{opacity:0;pointer-events:none}
-  @media (hover:none){.arrow{opacity:.42}}
   .dots{position:fixed;right:3vw;bottom:2.6vh;display:flex;gap:.6vw;z-index:8}
   .dots i{display:block;width:5px;height:5px;border-radius:50%;
     background:rgba(255,255,255,.26);transition:background .4s,transform .4s}
@@ -80,32 +73,28 @@
     font-size:.95vw;letter-spacing:.24em;opacity:.5;transition:opacity .8s;z-index:8;pointer-events:none}
   .hint.hide{opacity:0}
 
+  /* ---------- 手机 ---------- */
   @media (max-width:760px){
-    .slide{overflow-y:auto;-webkit-overflow-scrolling:touch}
-    .stage{position:relative;width:100%;height:0;padding-top:56.25%;background:#000}
-    .stage video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
-    .stage .veil{position:absolute;inset:0}
-    .cap{position:relative;top:auto;left:auto;right:auto;bottom:auto;
-      display:block;transform:none;padding:8vw 8vw 7vw}
-    .cap .idx{font-size:3.2vw;letter-spacing:.34em;margin-bottom:2vh}
-    .cap h1{font-size:11vw;letter-spacing:.1em}
-    .cap .bar{width:14vw;margin:2.6vh 0 2vh}
-    .cap p{font-size:4.1vw;letter-spacing:.06em;line-height:1.75}
-    .hero{position:relative;left:auto;top:auto;transform:none;
-      display:block;padding:8vw 8vw 7vw;text-shadow:none}
-    .hero .h1{font-size:17vw;letter-spacing:.12em}
+    html,body{overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .stage{position:relative;height:0;padding-top:56.25%}
+    .veil{height:34%}
+    .ov{position:relative;top:auto;bottom:auto;left:auto;right:auto;
+      min-height:calc(100vh - 56.25vw);padding:9vw 8vw 10vw;justify-content:center}
+    .idx{font-size:3.2vw;letter-spacing:.34em;margin-bottom:2.2vh}
+    .t1{font-size:11vw;letter-spacing:.1em}
+    .bar{width:14vw;margin:2.8vh 0 2.2vh}
+    .kw{font-size:4.1vw;letter-spacing:.06em;line-height:1.75}
+    .hero .h1{font-size:16vw;letter-spacing:.12em}
     .hero .rule{width:22vw;margin:3.4vh 0 0}
     .hero .h2{font-size:5.2vw;letter-spacing:.3em;margin-top:2.4vh}
     .hero .label{font-size:3.5vw;letter-spacing:.2em;margin-top:4.4vh}
-    .hero .label span{margin-left:.5em}
-    .hero .team{font-size:3.9vw;letter-spacing:.03em;max-width:100%;line-height:2}
+    .hero .team{font-size:3.9vw;letter-spacing:.03em;line-height:2}
     .brand{display:none}
-    .arrow{top:28vw;font-size:10vw;opacity:.34;padding:2vh 3vw}
-    .dots{position:fixed;bottom:1.4vh}.dots i{width:6px;height:6px}.dots{gap:2.4vw}
-    .hint{position:fixed;bottom:1.4vh;font-size:3vw;letter-spacing:.16em}
-    .end .cap{text-align:center}
-    .end .cap h1{font-size:13vw}
-    .end .cap .label{margin-top:3.4vh}
+    .arrow{top:28vw;font-size:10vw;opacity:.35}
+    .dots{position:fixed;bottom:1.6vh}.dots i{width:6px;height:6px}.dots{gap:2.4vw}
+    .hint{position:fixed;bottom:1.6vh;font-size:3vw}
+    .end .t1{font-size:13vw}
+    .end .label{margin-top:3.4vh}
     .frame{inset:8px}
   }
 </style>
@@ -115,103 +104,61 @@
 <div class="brand">颐和园 · 中国的世界文化遗产</div>
 <div class="frame"></div>
 
-<div class="slide s0 on">
-  <div class="stage">
-    <video src="vid/open.mp4" poster="img/海报-0.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
-    <div class="veil hero-veil"></div>
-  </div>
-  <div class="hero">
-    <div class="h1">颐和园</div>
-    <div class="rule"></div>
-    <div class="h2">世界文化遗产</div>
-    <div class="label">小组成员<span>（排名不分先后）</span></div>
-    <div class="team">蒋欣格 · 戚子墨 · 周柏妤 · 孙一雯 · 崔梦伊 · 于馨雅 · 韩欣坤</div>
-  </div>
+<div class="stage">
+  <img id="poster" src="" alt="">
+  <video id="player" muted loop playsinline webkit-playsinline preload="auto"></video>
+  <div class="veil"></div>
 </div>
-<div class="slide s2">
-  <div class="stage">
-    <video src="vid/s1.mp4" poster="img/海报-1.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">01 / 06</div>
-    <h1>长廊</h1>
-    <div class="bar"></div>
-    <p>728 米 · 273 间 · 14000 多幅彩画</p>
-  </div>
+
+<div class="ov hero on" data-i="0">
+  <div class="h1">颐和园</div>
+  <div class="rule"></div>
+  <div class="h2">世界文化遗产</div>
+  <div class="label">小组成员<span>（排名不分先后）</span></div>
+  <div class="team">蒋欣格 · 戚子墨 · 周柏妤 · 孙一雯 · 崔梦伊 · 于馨雅 · 韩欣坤</div>
 </div>
-<div class="slide s3">
-  <div class="stage">
-    <video src="vid/s2.mp4" poster="img/海报-2.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">02 / 06</div>
-    <h1>佛香阁</h1>
-    <div class="bar"></div>
-    <p>三层 · 金黄琉璃瓦 · 41 米</p>
-  </div>
+<div class="ov" data-i="1">
+  <div class="idx">01 / 06</div>
+  <div class="t1">长廊</div>
+  <div class="bar"></div>
+  <div class="kw">728 米 · 273 间 · 14000 多幅彩画</div>
 </div>
-<div class="slide s4">
-  <div class="stage">
-    <video src="vid/s3.mp4" poster="img/海报-3.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">03 / 06</div>
-    <h1>石舫</h1>
-    <div class="bar"></div>
-    <p>清晏舫 · 一艘开不走的石头船</p>
-  </div>
+<div class="ov" data-i="2">
+  <div class="idx">02 / 06</div>
+  <div class="t1">佛香阁</div>
+  <div class="bar"></div>
+  <div class="kw">三层 · 金黄琉璃瓦 · 41 米</div>
 </div>
-<div class="slide s5">
-  <div class="stage">
-    <video src="vid/s4.mp4" poster="img/海报-4.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">04 / 06</div>
-    <h1>昆明湖</h1>
-    <div class="bar"></div>
-    <p>仿西湖 · 把江南搬到北京</p>
-  </div>
+<div class="ov" data-i="3">
+  <div class="idx">03 / 06</div>
+  <div class="t1">石舫</div>
+  <div class="bar"></div>
+  <div class="kw">清晏舫 · 一艘开不走的石头船</div>
 </div>
-<div class="slide s6">
-  <div class="stage">
-    <video src="vid/s5.mp4" poster="img/海报-5.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">05 / 06</div>
-    <h1>十七孔桥</h1>
-    <div class="bar"></div>
-    <p>150 米 · 544 只石狮 · 冬至金光穿洞</p>
-  </div>
+<div class="ov" data-i="4">
+  <div class="idx">04 / 06</div>
+  <div class="t1">昆明湖</div>
+  <div class="bar"></div>
+  <div class="kw">仿西湖 · 把江南搬到北京</div>
 </div>
-<div class="slide s7">
-  <div class="stage">
-    <video src="vid/s6.mp4" poster="img/海报-6.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <div class="idx">06 / 06</div>
-    <h1>谐趣园</h1>
-    <div class="bar"></div>
-    <p>园中之园 · 仿无锡寄畅园</p>
-  </div>
+<div class="ov" data-i="5">
+  <div class="idx">05 / 06</div>
+  <div class="t1">十七孔桥</div>
+  <div class="bar"></div>
+  <div class="kw">150 米 · 544 只石狮 · 冬至金光穿洞</div>
 </div>
-<div class="slide end">
-  <div class="stage">
-    <video src="vid/end.mp4" poster="img/海报-9.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
-    <div class="veil"></div>
-  </div>
-  <div class="cap">
-    <h1>谢谢大家</h1>
-    <div class="bar"></div>
-    <p>颐和园 · 一座重生的园子</p>
-    <div class="label">小组成员<span>（排名不分先后）</span></div>
-    <div class="team">蒋欣格 · 戚子墨 · 周柏妤 · 孙一雯 · 崔梦伊 · 于馨雅 · 韩欣坤</div>
-  </div>
+<div class="ov" data-i="6">
+  <div class="idx">06 / 06</div>
+  <div class="t1">谐趣园</div>
+  <div class="bar"></div>
+  <div class="kw">园中之园 · 仿无锡寄畅园</div>
+</div>
+<div class="ov end" data-i="7">
+  <div class="t1">谢谢大家</div>
+  <div class="bar"></div>
+  <div class="kw">颐和园 · 一座重生的园子</div>
+  <div class="label">小组成员<span>（排名不分先后）</span></div>
+  <div class="team">蒋欣格 · 戚子墨 · 周柏妤 · 孙一雯 · 崔梦伊 · 于馨雅 · 韩欣坤</div>
 </div>
 
 <div class="zone l" onclick="go(-1)"></div>
@@ -222,48 +169,74 @@
 <div class="hint" id="hint">点右半边下一页 ｜ 点左半边返回 ｜ 键盘 ← →</div>
 
 <script>
-  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0;
+  var VIDS = ["vid/open.mp4","vid/s1.mp4","vid/s2.mp4","vid/s3.mp4","vid/s4.mp4","vid/s5.mp4","vid/s6.mp4","vid/end.mp4"];
+  var POSTERS = ["img/海报-0.jpg","img/海报-1.jpg","img/海报-2.jpg","img/海报-3.jpg","img/海报-4.jpg","img/海报-5.jpg","img/海报-6.jpg","img/海报-9.jpg"];
+  var ovs = [].slice.call(document.querySelectorAll('.ov'));
+  var player = document.getElementById('player');
+  var poster = document.getElementById('poster');
+  var dots = document.getElementById('dots');
+  var hint = document.getElementById('hint');
+  var al = document.getElementById('al'), ar = document.getElementById('ar');
+  var i = 0, N = VIDS.length;
   document.body.classList.add('first');
-  var hint=document.getElementById('hint'),dots=document.getElementById('dots');
-  slides.forEach(function(_,k){var d=document.createElement('i');
+
+  ovs.forEach(function(_,k){var d=document.createElement('i');
     if(k===0)d.className='on';dots.appendChild(d);});
-  function show(n){
-    slides[i].classList.remove('on');
-    i=Math.max(0,Math.min(slides.length-1,n));
-    slides[i].classList.add('on');
-    [].forEach.call(dots.children,function(d,k){d.className=k===i?'on':'';});
-    if(i>0)hint.classList.add('hide');
-    document.body.classList.toggle('first', i===0);
-    document.getElementById('al').classList.toggle('off', i===0);
-    document.getElementById('ar').classList.toggle('off', i===slides.length-1);
-    slides.forEach(function(s,k){
-      var v=s.querySelector('video');
-      if(!v)return;
-      if(k===i){try{v.currentTime=0;v.play();}catch(e){}}
-      else{try{v.pause();}catch(e){}}
-    });
+
+  function playVideo(){
+    try{ var p = player.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
   }
-  function go(d){show(i+d);}
-  document.addEventListener('keydown',function(e){
-    if(['ArrowRight',' ','PageDown','Enter'].indexOf(e.key)>=0){go(1);e.preventDefault();}
-    if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){go(-1);e.preventDefault();}
-    if(e.key==='Home')show(0);
-    if(e.key==='End')show(slides.length-1);
+  function load(n){
+    poster.src = POSTERS[n];
+    player.classList.remove('ready');
+    player.src = VIDS[n];
+    try{ player.load(); }catch(e){}
+    playVideo();
+  }
+  player.addEventListener('playing', function(){ player.classList.add('ready'); });
+  player.addEventListener('canplay', function(){ playVideo(); });
+
+  function show(n){
+    if(n < 0) n = 0; if(n > N-1) n = N-1;
+    ovs[i].classList.remove('on');
+    i = n;
+    ovs[i].classList.add('on');
+    [].forEach.call(dots.children, function(d,k){ d.className = k===i ? 'on' : ''; });
+    if(i>0) hint.classList.add('hide');
+    document.body.classList.toggle('first', i===0);
+    al.classList.toggle('off', i===0);
+    ar.classList.toggle('off', i===N-1);
+    load(i);
+  }
+  function go(d){ show(i+d); }
+
+  document.addEventListener('keydown', function(e){
+    if(['ArrowRight',' ','PageDown','Enter'].indexOf(e.key)>=0){ go(1); e.preventDefault(); }
+    if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){ go(-1); e.preventDefault(); }
+    if(e.key==='Home') show(0);
+    if(e.key==='End') show(N-1);
     if(e.key==='f'||e.key==='F'){
-      if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
-      else{document.exitFullscreen&&document.exitFullscreen();}
+      if(!document.fullscreenElement){ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
+      else { document.exitFullscreen && document.exitFullscreen(); }
     }
   });
-  function tryPlay(v){try{var p=v.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
-  document.addEventListener('touchstart',function(){
-    var v=slides[i].querySelector('video');
-    if(v&&v.paused) tryPlay(v);
-  },{passive:true});
-  var tx;
-  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
-  document.addEventListener('touchend',function(e){
-    var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45)go(dx<0?1:-1);
-  },{passive:true});
+
+  var tx = null, moved = false;
+  document.addEventListener('touchstart', function(e){
+    tx = e.touches[0].clientX; moved = false;
+    if(player.paused) playVideo();
+  }, {passive:true});
+  document.addEventListener('touchmove', function(e){
+    if(tx!==null && Math.abs(e.touches[0].clientX - tx) > 30) moved = true;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if(tx===null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx) > 45 && moved) go(dx<0 ? 1 : -1);
+    tx = null;
+  }, {passive:true});
+
+  load(0);
 </script>
 </body>
 </html>
