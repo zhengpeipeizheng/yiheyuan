@@ -114,7 +114,7 @@
 
 <div class="slide s0 on">
   <div class="stage">
-    <video data-src="vid/open.mp4" poster="img/海报-0.jpg" muted loop playsinline webkit-playsinline preload="none"></video>
+    <video src="vid/open.mp4" poster="img/海报-0.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
     <div class="veil"></div>
   </div>
   <div class="hero">
@@ -275,6 +275,14 @@
     tx=null;
   },{passive:true});
 
+  var first = slides[0].querySelector('video');
+  if(first){
+    ['loadeddata','canplay','loadedmetadata'].forEach(function(ev){
+      first.addEventListener(ev, function(){ try{first.muted=true;first.play();}catch(e){} });
+    });
+    setTimeout(function(){ try{first.muted=true;first.play();}catch(e){} }, 300);
+    setTimeout(function(){ try{first.muted=true;first.play();}catch(e){} }, 1200);
+  }
   ['click','touchstart','keydown'].forEach(function(ev){
     document.addEventListener(ev, function(){ activate(i); }, {passive:true});
   });
