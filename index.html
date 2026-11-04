@@ -308,8 +308,12 @@
   function tryFirst(){ if(!first) return; try{ first.muted=true; first.play(); }catch(e){} }
   if(window.WeixinJSBridge){ try{ WeixinJSBridge.invoke('getNetworkType',{},tryFirst); }catch(e){} }
   document.addEventListener('WeixinJSBridgeReady', tryFirst, false);
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  var playedOnce = false;
   function checkTap(){
-    if(tap){ tap.classList.toggle('show', i===0 && first && first.paused); }
+    if(!tap) return;
+    var show = isTouch && !playedOnce && i===0 && first && first.paused;
+    tap.classList.toggle('show', show);
   }
   if(first){
     ['loadeddata','canplay','loadedmetadata'].forEach(function(ev){
@@ -318,7 +322,7 @@
     setTimeout(function(){ tryFirst(); checkTap(); }, 300);
     setTimeout(function(){ tryFirst(); checkTap(); }, 1200);
     setTimeout(function(){ tryFirst(); checkTap(); }, 2500);
-    first.addEventListener('playing', function(){ if(tap) tap.classList.remove('show'); });
+    first.addEventListener('playing', function(){ playedOnce = true; if(tap) tap.classList.remove('show'); });
     first.addEventListener('pause', checkTap);
   }
   ['click','touchstart','keydown'].forEach(function(ev){
