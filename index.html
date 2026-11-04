@@ -61,54 +61,33 @@
     padding:1.4vh 2vw;font-size:1.05vw;letter-spacing:.22em;white-space:nowrap;
     display:none;pointer-events:none}
   .tap.show{display:block}
-  @media (max-width:760px){.tap{font-size:4vw;padding:2.4vh 5vw;top:28vw}}
-  .frame{position:fixed;inset:15px;border:1px solid rgba(255,255,255,.12);pointer-events:none;z-index:9}
-  .zone{position:fixed;top:0;bottom:0;width:24%;cursor:pointer;z-index:6}
-  .zone.l{left:0}.zone.r{right:0}
-  .arrow{position:fixed;top:36%;transform:translateY(-50%);z-index:7;border:0;background:none;
-    color:#fff;font-family:Georgia,"Songti SC",serif;font-size:3.2vw;line-height:1;
-    padding:3vh 1vw;cursor:pointer;opacity:.24;transition:opacity .35s;
-    text-shadow:0 2px 18px rgba(0,0,0,.7)}
-  .arrow:hover{opacity:.62}
-  .arrow.l{left:.4vw}.arrow.r{right:.4vw}
-  .arrow.off{opacity:0;pointer-events:none}
-  .dots{position:fixed;right:3vw;bottom:2.6vh;display:flex;gap:.6vw;z-index:8}
-  .dots i{display:block;width:5px;height:5px;border-radius:50%;
-    background:rgba(255,255,255,.26);transition:background .4s,transform .4s}
-  .dots i.on{background:#fff;transform:scale(1.25)}
-  .hint{position:fixed;left:0;right:0;bottom:2.6vh;text-align:center;color:#fff;
-    font-size:.95vw;letter-spacing:.24em;opacity:.5;transition:opacity .8s;z-index:8;pointer-events:none}
-  .hint.hide{opacity:0}
-
-  /* ---------- 手机：结构与电脑一致，只是上下分区 ---------- */
   @media (max-width:760px){
-    .slide{display:flex;flex-direction:column}
+    .slide{display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
     .stage,.s0 .stage{position:relative;top:auto;left:auto;width:100%;height:0;
-      padding-top:56.25%;flex:0 0 auto}
-    .s0 .stage .veil{height:100%;
-      background:linear-gradient(to right,rgba(0,0,0,.72) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 80%)}
+      padding-top:56.25%;flex:0 0 auto;margin-top:auto}
     .stage video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
     .stage .veil{height:38%}
-    .cap{position:relative;top:auto;left:auto;right:auto;bottom:auto;
-      flex:1 1 auto;justify-content:center;padding:8vw 8vw 9vw}
-    .hero{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none;
-      flex:1 1 auto;padding:8vw 8vw 10vw;display:block}
-    .cap .idx{font-size:3.2vw;letter-spacing:.32em;margin-bottom:2.2vh}
-    .cap h1{font-size:11vw;letter-spacing:.1em}
-    .cap .bar{width:14vw;margin:2.8vh 0 2.2vh}
-    .cap p{font-size:4.1vw;letter-spacing:.06em;line-height:1.75}
-    .hero .h1{font-size:16vw;letter-spacing:.12em}
-    .hero .rule{width:22vw;margin:3.4vh 0 0}
-    .hero .h2{font-size:5.2vw;letter-spacing:.3em;margin-top:2.4vh}
-    .hero .label{font-size:3.5vw;letter-spacing:.2em;margin-top:4.4vh}
-    .hero .team{font-size:3.9vw;letter-spacing:.03em;line-height:2}
+    .s0 .stage .veil{height:100%;
+      background:linear-gradient(to right,rgba(0,0,0,.72) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 80%)}
+    .cap,.hero{position:relative;top:auto;left:auto;right:auto;bottom:auto;
+      flex:0 0 auto;margin-bottom:auto;justify-content:flex-start;
+      transform:none;display:block;padding:7vw 9vw 4vw;color:#fff}
+    .cap .idx{font-size:3.2vw;letter-spacing:.32em;margin-bottom:2vh}
+    .cap h1{font-size:10.5vw;letter-spacing:.1em}
+    .cap .bar{width:16vw;margin:2.6vh 0 2vh}
+    .cap p{font-size:4vw;letter-spacing:.05em;line-height:1.75}
+    .hero .h1{font-size:15vw;letter-spacing:.14em}
+    .hero .rule{width:24vw;margin:3.2vh 0 0}
+    .hero .h2{font-size:5vw;letter-spacing:.28em;margin-top:2.2vh}
+    .hero .label{font-size:3.4vw;letter-spacing:.18em;margin-top:4vh}
+    .hero .team{font-size:3.7vw;letter-spacing:.02em;line-height:1.95}
     .brand{display:none}
-    .arrow{top:28vw;font-size:10vw;opacity:.35}
+    .arrow{top:26vw;font-size:9vw;opacity:.35}
     .dots{bottom:1.6vh}.dots i{width:6px;height:6px}.dots{gap:2.4vw}
     .hint{bottom:1.6vh;font-size:3vw}
-    .end .cap{padding-bottom:9vw}
-    .end .cap h1{font-size:13vw}
-    .end .cap .label{margin-top:3.4vh}
+    .end .cap{text-align:center;padding:7vw 9vw 4vw}
+    .end .cap h1{font-size:12vw}
+    .end .cap .label{margin-top:3.2vh}
     .frame{inset:8px}
   }
 </style>
