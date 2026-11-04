@@ -30,6 +30,13 @@
   .cap .bar{width:54px;height:1px;background:rgba(255,255,255,.45);margin:1.7vh 0 1.3vh}
   .cap p{font-size:1.02vw;letter-spacing:.17em;color:rgba(255,255,255,.72);margin:0}
 
+  .birds{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3}
+  .bw{position:absolute;left:0;will-change:transform;animation:gofly linear infinite}
+  .bd{display:block;fill:none;stroke:rgba(255,255,255,.92);stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round;animation:flap 1.15s ease-in-out infinite alternate;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+  @keyframes gofly{from{transform:translateX(-16vw)}to{transform:translateX(114vw)}}
+  @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
   .brand{position:absolute;left:7.4vw;top:5.4vh;color:#fff;font-size:.9vw;
     letter-spacing:.42em;opacity:.45;pointer-events:none}
   body.first .brand{opacity:0}
