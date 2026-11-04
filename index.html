@@ -5,113 +5,115 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>颐和园 · 中国的世界文化遗产</title>
 <style>
-  html,body{margin:0;height:100%;background:#0e0b08;overflow:hidden;
+  html,body{margin:0;height:100%;background:#0d0a07;overflow:hidden;
     font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Songti SC",serif;
-    -webkit-font-smoothing:antialiased}
-  .slide{position:fixed;inset:0;display:none}
+    -webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+  .slide{position:fixed;inset:0;display:none;overflow:hidden}
   .slide.on{display:block}
   .slide img,.slide video{width:100%;height:100%;object-fit:cover;display:block}
+  .slide img{animation:kb 22s ease-in-out infinite alternate;transform-origin:center}
+  @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.12)}}
+  .s2 img{animation-delay:-3s} .s3 img{animation-delay:-7s}
+  .s4 img{animation-delay:-11s} .s5 img{animation-delay:-5s}
+  .s6 img{animation-delay:-9s} .s7 img{animation-delay:-13s}
   .shade{position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(to top,rgba(20,15,10,.82) 0%,rgba(20,15,10,.30) 32%,rgba(20,15,10,.02) 62%)}
+    background:linear-gradient(to top,rgba(18,13,9,.84) 0%,rgba(18,13,9,.28) 34%,rgba(18,13,9,.02) 62%)}
   .cap{position:absolute;left:6vw;bottom:9vh;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.85)}
   .cap .t{font-size:4.6vw;font-weight:700;letter-spacing:.08em;line-height:1.12}
   .cap .k{font-size:1.9vw;margin-top:1.4vh;opacity:.92;letter-spacing:.04em}
-  .page{position:fixed;right:2.2vw;bottom:2.4vh;color:#fff;opacity:.45;font-size:.95vw;
-    letter-spacing:.12em;pointer-events:none}
-  .hint{position:fixed;left:50%;bottom:4vh;transform:translateX(-50%);color:#fff;opacity:.7;
-    font-size:1vw;letter-spacing:.14em;pointer-events:none;transition:opacity .6s}
+  .end .cap{left:0;right:0;text-align:center;bottom:38vh}
+  .end .cap .t{font-size:5.6vw}
+  .hint{position:fixed;left:50%;bottom:3.4vh;transform:translateX(-50%);color:#fff;
+    opacity:.72;font-size:1vw;letter-spacing:.16em;transition:opacity .8s;pointer-events:none}
   .hint.hide{opacity:0}
-  .nav{position:fixed;inset:0;display:flex}
-  .nav div{flex:1}
+  .zone{position:fixed;top:0;bottom:0;width:22%;cursor:pointer;z-index:5}
+  .zone.l{left:0} .zone.r{right:0}
+  .dots{position:fixed;right:2vw;bottom:3vh;display:flex;gap:.55vw;z-index:6}
+  .dots i{width:.55vw;height:.55vw;border-radius:50%;background:rgba(255,255,255,.35);
+    display:block;transition:background .3s}
+  .dots i.on{background:#fff}
   @media (max-width:700px){
     .cap .t{font-size:9vw}.cap .k{font-size:4vw}.cap{bottom:12vh}
+    .hint{font-size:3vw}.dots i{width:2vw;height:2vw}.dots{gap:2vw}
   }
 </style>
 </head>
 <body>
 
-<div class="slide on">
+<div class="slide s0 on">
   <video src="vid/open.mp4" autoplay muted loop playsinline poster="img/map.png"></video>
 </div>
-
-<div class="slide">
-  <img src="img/panorama.jpg" alt="">
-  <div class="shade"></div>
-  <div class="cap"><div class="t">颐和园</div><div class="k">中国的世界文化遗产 ｜ 四年级语文实践活动</div></div>
-</div>
-
-<div class="slide">
+<div class="slide s2">
   <img src="img/1.jpg" alt="">
   <div class="shade"></div>
   <div class="cap"><div class="t">长廊</div><div class="k">728 米 ｜ 273 间 ｜ 14000 多幅彩画</div></div>
 </div>
-
-<div class="slide">
+<div class="slide s3">
   <img src="img/2.jpg" alt="">
   <div class="shade"></div>
-  <div class="cap"><div class="t">佛香阁</div><div class="k">41 米 ｜ 全园的中心</div></div>
+  <div class="cap"><div class="t">佛香阁</div><div class="k">从下面数三层 ｜ 金黄琉璃瓦 ｜ 41 米</div></div>
 </div>
-
-<div class="slide">
+<div class="slide s4">
   <img src="img/3.jpg" alt="">
   <div class="shade"></div>
-  <div class="cap"><div class="t">石舫</div><div class="k">一艘开不走的石头船</div></div>
+  <div class="cap"><div class="t">石舫</div><div class="k">清晏舫 ｜ 一艘开不走的石头船</div></div>
 </div>
-
-<div class="slide">
+<div class="slide s5">
   <img src="img/4.jpg" alt="">
   <div class="shade"></div>
-  <div class="cap"><div class="t">昆明湖</div><div class="k">把江南搬到北京</div></div>
+  <div class="cap"><div class="t">昆明湖</div><div class="k">照着西湖造的 ｜ 把江南搬到北京</div></div>
 </div>
-
-<div class="slide">
+<div class="slide s6">
   <img src="img/5.jpg" alt="">
   <div class="shade"></div>
   <div class="cap"><div class="t">十七孔桥</div><div class="k">150 米 ｜ 544 只石狮 ｜ 冬至金光穿洞</div></div>
 </div>
-
-<div class="slide">
+<div class="slide s7">
   <img src="img/6.jpg" alt="">
   <div class="shade"></div>
   <div class="cap"><div class="t">谐趣园</div><div class="k">园中之园 ｜ 仿无锡寄畅园</div></div>
 </div>
-
-<div class="slide">
+<div class="slide end">
   <video src="vid/end.mp4" autoplay muted loop playsinline poster="img/panorama.jpg"></video>
+  <div class="shade"></div>
+  <div class="cap"><div class="t">谢谢大家</div></div>
 </div>
 
-<div class="page" id="pg">1 / 9</div>
-<div class="hint" id="hint">按 → 或点右侧翻页 ｜ F 全屏</div>
-<div class="nav"><div onclick="go(-1)"></div><div onclick="go(1)"></div></div>
+<div class="zone l" onclick="go(-1)"></div>
+<div class="zone r" onclick="go(1)"></div>
+<div class="hint" id="hint">点右侧或按 → 翻页</div>
+<div class="dots" id="dots"></div>
 
 <script>
-  var slides=document.querySelectorAll('.slide'), i=0;
-  var pg=document.getElementById('pg'), hint=document.getElementById('hint');
+  var slides=[].slice.call(document.querySelectorAll('.slide')), i=0;
+  var hint=document.getElementById('hint'), dots=document.getElementById('dots');
+  slides.forEach(function(_,k){var d=document.createElement('i');
+    if(k===0)d.className='on'; dots.appendChild(d);});
   function show(n){
     slides[i].classList.remove('on');
     i=Math.max(0,Math.min(slides.length-1,n));
     slides[i].classList.add('on');
-    pg.textContent=(i+1)+' / '+slides.length;
+    [].forEach.call(dots.children,function(d,k){d.className=k===i?'on':'';});
     if(i>0) hint.classList.add('hide');
     var v=slides[i].querySelector('video');
-    if(v){v.currentTime=0;v.play().catch(function(){});}
+    if(v){try{v.currentTime=0;v.play();}catch(e){}}
   }
   function go(d){show(i+d);}
   document.addEventListener('keydown',function(e){
     if(['ArrowRight',' ','PageDown','Enter'].indexOf(e.key)>=0){go(1);e.preventDefault();}
     if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){go(-1);e.preventDefault();}
-    if(e.key==='Home'){show(0)}
-    if(e.key==='End'){show(slides.length-1)}
+    if(e.key==='Home')show(0);
+    if(e.key==='End')show(slides.length-1);
     if(e.key==='f'||e.key==='F'){
       if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
       else{document.exitFullscreen&&document.exitFullscreen();}
     }
   });
-  var t; document.addEventListener('touchstart',function(e){t=e.touches[0].clientX;});
+  var tx;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
   document.addEventListener('touchend',function(e){
-    var dx=e.changedTouches[0].clientX-t;
-    if(Math.abs(dx)>50) go(dx<0?1:-1);
-  });
+    var dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>45) go(dx<0?1:-1);
+  },{passive:true});
 </script>
 </body>
 </html>
