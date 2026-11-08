@@ -535,7 +535,7 @@
   var tx=null;
   document.addEventListener('touchstart',function(e){
     tx=e.touches[0].clientX;
-    activate(i); if(tap) tap.classList.remove('show');
+    if(tap) tap.classList.remove('show');
   },{passive:true});
   document.addEventListener('touchend',function(e){
     if(tx===null)return;
