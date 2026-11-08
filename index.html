@@ -21,6 +21,10 @@
   .stage video{width:100%;height:100%;object-fit:contain;display:block}
   .stage .veil{position:absolute;left:0;bottom:0;width:100%;height:26%;pointer-events:none;
     background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0))}
+  .sub{position:absolute;left:0;right:0;bottom:11%;text-align:center;padding:0 20vw;
+    font-size:1.15vw;line-height:1.55;color:#fff;letter-spacing:.03em;
+    text-shadow:0 2px 10px rgba(0,0,0,.92),0 0 3px rgba(0,0,0,.85);pointer-events:none}
+  .sub b{color:#E8C46A;font-weight:600}
 
   .cap{position:absolute;top:72%;left:0;right:0;bottom:0;color:#fff;
     display:flex;flex-direction:column;justify-content:center;padding:0 7.4vw}
@@ -124,6 +128,7 @@
     .end .cap h1{font-size:5.1vw}
     .end .cap .label{margin-top:1.6vh;font-size:1.5vw}
     .frame{inset:8px}
+    .sub{bottom:6%;padding:0 8vw;font-size:3.2vw}
   }
 </style>
 </head>
@@ -163,6 +168,7 @@
   <div class="stage">
     <video data-src="https://gcore.jsdelivr.net/gh/zhengpeipeizheng/yiheyuan@0b305becb8c08bb146d5ab9160ee1399ff094d2f/vid/s2.mp4" poster="https://gcore.jsdelivr.net/gh/zhengpeipeizheng/yiheyuan@965b28cb0e63d45c7b7cc712ddfaeec027db49ac/img/海报-2.jpg" loop playsinline webkit-playsinline preload="none"></video>
     <div class="veil"></div>
+    <div class="sub"></div>
   </div>
   <div class="cap">
     <div class="idx">02 / 07</div>
@@ -260,16 +266,50 @@
   slides.forEach(function(_,k){var d=document.createElement('i');
     if(k===0)d.className='on';dots.appendChild(d);});
 
+  var SUBS={2:[
+    {s:0.0,t:2.0,x:"大家好，我是**孙一雯**"},
+    {s:2.0,t:5.6,x:"现在跟我一起走进**颐和园**的第二个景点"},
+    {s:5.6,t:8.4,x:"**佛香阁**，在**长廊**正北方"},
+    {s:8.4,t:11.6,x:"它坐落在**万寿山**的山腰"},
+    {s:11.6,t:14.2,x:"它建在高高的**石台**上"},
+    {s:15.2,t:18.6,x:"它是一座**八面三层**的塔楼"},
+    {s:18.6,t:20.6,x:"黄绿相间的**琉璃瓦**"},
+    {s:20.6,t:23.2,x:"**熠熠生辉**，**雕梁画栋**"},
+    {s:23.2,t:25.8,x:"远远看去格外**雄伟壮观**"},
+    {s:27.6,t:31.4,x:"塔内有八根**铁梨木擎天柱**"},
+    {s:31.4,t:33.8,x:"稳稳支撑着整座塔楼"},
+    {s:33.8,t:39.0,x:"还供奉着一尊珍贵的**明代千手观音铜像**"},
+    {s:40.0,t:41.8,x:"**佛香阁**历史悠久"},
+    {s:41.8,t:43.8,x:"它建于**乾隆**时期"},
+    {s:43.8,t:46.6,x:"**1860 年**被**英法联军**烧毁"},
+    {s:46.6,t:49.4,x:"后来在**光绪**年间重新修建"},
+    {s:49.4,t:52.8,x:"这也是当年**慈禧太后**烧香拜佛的地方"},
+    {s:52.8,t:55.8,x:"是**颐和园**最具代表性的古建筑"}
+  ]};
+  function renderSub(k,v){
+    var el=slides[k].querySelector('.sub'); if(!el||!SUBS[k]) return;
+    var t=v.currentTime,c=null;
+    for(var j=0;j<SUBS[k].length;j++){ if(t>=SUBS[k][j].s&&t<SUBS[k][j].t){ c=SUBS[k][j]; break; } }
+    var key=c?String(c.s):"";
+    if(el.getAttribute('data-k')===key) return;
+    el.setAttribute('data-k',key);
+    el.innerHTML=c?c.x.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'):"";
+  }
+
   function activate(k){
     var v=slides[k].querySelector('video'); if(!v) return;
     v.muted = false; v.volume = 1;
     if(!v.getAttribute('src')){ v.setAttribute('src', v.getAttribute('data-src')); }
     try{ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }catch(e){}
+    v.ontimeupdate=function(){ renderSub(k,v); };
+    renderSub(k,v);
   }
   function deactivate(k){
     var v=slides[k].querySelector('video'); if(!v) return;
     try{ v.pause(); }catch(e){}
     if(v.getAttribute('src')){ v.removeAttribute('src'); try{v.load();}catch(e){} }
+    var el=slides[k].querySelector('.sub');
+    if(el){ el.innerHTML=''; el.removeAttribute('data-k'); }
   }
   function placeArrows(){
     if(!window.matchMedia||!window.matchMedia('(max-width:760px), (orientation:portrait) and (max-width:1100px)').matches) return;
