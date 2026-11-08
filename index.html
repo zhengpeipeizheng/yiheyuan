@@ -411,10 +411,10 @@
   }
 
   var birds=document.getElementById('birds'), bgm=document.getElementById('bgm');
-  if(birds) birds.volume=.55; if(bgm) bgm.volume=.10;
-  function playBed(n){
+  if(birds) birds.volume=.10;
+  function playBed(){
     if(!birds) return;
-    try{ if(n===0){ birds.play(); }else{ birds.pause(); } }catch(e){}
+    try{ birds.play(); }catch(e){}
   }
 
   function activate(k){
@@ -456,7 +456,7 @@
     activate(i);
     requestAnimationFrame(placeArrows);
     setTimeout(placeArrows, 120);
-    playBed(n);
+    playBed();
   }
   function go(d){show(i+d);}
 
@@ -509,13 +509,13 @@
   tryBirds(); setTimeout(tryBirds,500); setTimeout(tryBirds,1500);
 
   var started=false;
-  function startBedOnce(){ if(started) return; started=true; if(i===0) playBed(0); }
+  function startBedOnce(){ if(started) return; started=true; if(i===0) playBed(); }
   document.addEventListener('pointerdown', startBedOnce, {once:true});
   document.addEventListener('keydown', startBedOnce, {once:true});
 
   var startOv = document.getElementById('start');
   if(startOv){ startOv.addEventListener('click', function(){
-    startOv.classList.add('hide'); activate(i); playBed(i);
+    startOv.classList.add('hide'); activate(i); playBed();
   }); }
   activate(0);
 </script>
