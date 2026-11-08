@@ -142,7 +142,6 @@
 <div class="brand">颐和园 · 中国的世界文化遗产</div>
 <div class="frame"></div>
 <audio id="birds" loop preload="auto" src="audio/鸟鸣.m4a"></audio>
-<audio id="bgm" loop preload="auto" src="audio/青山入画-配乐.m4a"></audio>
 <div class="tap" id="tap">轻触屏幕开始播放</div>
 
 <div class="slide s0 on">
@@ -358,13 +357,8 @@
   var birds=document.getElementById('birds'), bgm=document.getElementById('bgm');
   if(birds) birds.volume=.55; if(bgm) bgm.volume=.10;
   function playBed(n){
-    if(n===0){
-      if(birds){try{birds.play()}catch(e){}}
-      if(bgm){try{bgm.pause()}catch(e){}}
-    }else{
-      if(birds){try{birds.pause()}catch(e){}}
-      if(bgm){try{bgm.play()}catch(e){}}
-    }
+    if(!birds) return;
+    try{ if(n===0){ birds.play(); }else{ birds.pause(); } }catch(e){}
   }
 
   function activate(k){
