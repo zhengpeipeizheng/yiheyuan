@@ -98,7 +98,6 @@
   .start{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
     background:rgba(0,0,0,.55);color:#fff;font-size:1.4vw;letter-spacing:.3em;cursor:pointer}
   .start.hide{display:none}
-  @media (hover:hover) and (pointer:fine){ .start{display:none} }
   .tap{position:fixed;left:50%;top:36%;transform:translate(-50%,-50%);z-index:8;
     color:#fff;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.45);
     padding:1.4vh 2vw;font-size:1.05vw;letter-spacing:.22em;white-space:nowrap;
@@ -142,7 +141,7 @@
 
 <div class="brand">颐和园 · 中国的世界文化遗产</div>
 <div class="frame"></div>
-<div class="start" id="start">点击开始放映</div>
+<div class="start" id="start">点击开始放映（开启声音）</div>
 <audio id="birds" loop preload="auto" src="audio/鸟鸣.m4a"></audio>
 <audio id="bgm" loop preload="auto" src="audio/青山入画-配乐.m4a"></audio>
 <div class="tap" id="tap">轻触屏幕开始播放</div>
@@ -457,6 +456,11 @@
     first.addEventListener('playing', function(){ playedOnce = true; if(tap) tap.classList.remove('show'); });
     first.addEventListener('pause', checkTap);
   }
+  var started=false;
+  function startBedOnce(){ if(started) return; started=true; if(i===0) playBed(0); }
+  document.addEventListener('pointerdown', startBedOnce, {once:true});
+  document.addEventListener('keydown', startBedOnce, {once:true});
+
   var startOv = document.getElementById('start');
   if(startOv){ startOv.addEventListener('click', function(){
     startOv.classList.add('hide'); activate(i); playBed(i);
