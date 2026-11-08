@@ -22,9 +22,11 @@
   .stage .veil{position:absolute;left:0;bottom:0;width:100%;height:26%;pointer-events:none;
     background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0))}
   .sub{position:absolute;left:0;right:0;bottom:10%;text-align:center;padding:0 20vw;
-    font-family:"Yuanti SC","PingFang SC",sans-serif;
-    font-size:2.8vw;line-height:1.5;color:#FFF6E0;letter-spacing:.06em;
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Heiti SC",sans-serif;
+    font-size:2.3vw;line-height:1.5;color:#FFF6E0;letter-spacing:.04em;
     text-shadow:0 3px 12px rgba(0,0,0,.95),0 0 6px rgba(255,200,90,.35);pointer-events:none}
+  .sub .ln{display:inline-block;animation:subPop .3s ease-out both}
+  @keyframes subPop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
   .sub b{color:#E8C46A;font-weight:600;text-shadow:0 0 10px rgba(232,196,106,.55)}
 
   .cap{position:absolute;top:72%;left:0;right:0;bottom:0;color:#fff;
@@ -129,7 +131,7 @@
     .end .cap h1{font-size:5.1vw}
     .end .cap .label{margin-top:1.6vh;font-size:1.5vw}
     .frame{inset:8px}
-    .sub{bottom:6%;padding:0 8vw;font-size:4.6vw}
+    .sub{bottom:6%;padding:0 8vw;font-size:4.2vw}
   }
 </style>
 </head>
@@ -294,7 +296,7 @@
     var key=c?String(c.s):"";
     if(el.getAttribute('data-k')===key) return;
     el.setAttribute('data-k',key);
-    el.innerHTML=c?c.x.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'):"";
+    el.innerHTML=c?('<span class="ln">'+c.x.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')+'</span>'):"";
   }
 
   function activate(k){
