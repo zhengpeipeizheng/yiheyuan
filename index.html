@@ -148,8 +148,9 @@
     .end .cap h1{font-size:5.1vw}
     .end .cap .label{margin-top:1.6vh;font-size:1.5vw}
     .frame{inset:8px}
-    .sub{bottom:6%;padding:0 8vw;font-size:4.2vw}
+    .sub{bottom:6%;padding:0 8vw;font-size:3.4vw}
     .st.painter svg{width:30vw}.st.think svg{width:24vw}
+    .pstate{width:13vw;height:13vw;font-size:5.2vw}
   }
 </style>
 </head>
@@ -492,11 +493,15 @@
     if(el){ el.innerHTML=''; el.removeAttribute('data-k'); }
   }
   function placeArrows(){
-    if(!window.matchMedia||!window.matchMedia('(max-width:760px), (orientation:portrait) and (max-width:1100px)').matches) return;
+    if(!window.matchMedia||!window.matchMedia('(max-width:760px), (orientation:portrait) and (max-width:1100px)').matches){
+      if(pstate){ pstate.style.left=''; pstate.style.top=''; }
+      return;
+    }
     var st=slides[i].querySelector('.stage'); if(!st) return;
     var r=st.getBoundingClientRect();
     var y=(r.top + r.height/2);
     al.style.top=y+'px'; ar.style.top=y+'px';
+    if(pstate){ pstate.style.left=(r.left+r.width/2)+'px'; pstate.style.top=y+'px'; }
   }
   window.addEventListener('resize', function(){ setTimeout(placeArrows,60); });
   window.addEventListener('orientationchange', function(){ setTimeout(placeArrows,200); });
