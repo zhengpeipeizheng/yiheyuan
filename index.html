@@ -101,6 +101,11 @@
     pointer-events:none}
   .hint.hide{opacity:0}
 
+  .pstate{position:fixed;left:50%;top:36%;transform:translate(-50%,-50%);z-index:8;
+    width:4.4vw;height:4.4vw;border-radius:50%;background:rgba(0,0,0,.52);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:1.7vw;opacity:0;
+    transition:opacity .25s;pointer-events:none}
+  .pstate.show{opacity:.9}
   .start{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
     background:rgba(0,0,0,.55);color:#fff;font-size:1.4vw;letter-spacing:.3em;cursor:pointer}
   .start.hide{display:none}
@@ -274,7 +279,8 @@
 <button class="arrow l off" id="al" onclick="go(-1)" aria-label="上一页">‹</button>
 <button class="arrow r" id="ar" onclick="go(1)" aria-label="下一页">›</button>
 <div class="dots" id="dots"></div>
-<div class="hint" id="hint">点右半边下一页 ｜ 点左半边返回 ｜ 键盘 ← →</div>
+<div class="pstate" id="pstate">▶</div>
+<div class="hint" id="hint">点右半边下一页 ｜ 点左半边返回 ｜ 点画面暂停/继续 ｜ 键盘 ← →</div>
 
 <script>
   var slides=[].slice.call(document.querySelectorAll('.slide')),i=0;
@@ -443,6 +449,18 @@
     try{ birds.play(); }catch(e){}
   }
 
+  var pstate=document.getElementById('pstate');
+  function togglePlay(){
+    var v=slides[i].querySelector('video'); if(!v) return;
+    if(v.paused){ try{ v.play(); }catch(e){}; if(pstate) pstate.classList.remove('show'); }
+    else { try{ v.pause(); }catch(e){}; if(pstate) pstate.classList.add('show'); }
+  }
+  document.addEventListener('click', function(e){
+    if(!e.target || !e.target.closest) return;
+    if(!e.target.closest('.stage')) return;
+    togglePlay();
+  });
+
   function activate(k){
     var v=slides[k].querySelector('video'); if(!v) return;
     v.muted = false; v.volume = 1;
@@ -483,6 +501,7 @@
     requestAnimationFrame(placeArrows);
     setTimeout(placeArrows, 120);
     playBed();
+    if(pstate) pstate.classList.remove('show');
   }
   function go(d){show(i+d);}
 
