@@ -506,7 +506,8 @@
   function go(d){show(i+d);}
 
   document.addEventListener('keydown',function(e){
-    if(['ArrowRight',' ','PageDown','Enter'].indexOf(e.key)>=0){go(1);e.preventDefault();}
+    if(e.key===' '){ togglePlay(); e.preventDefault(); return; }
+    if(['ArrowRight','PageDown','Enter'].indexOf(e.key)>=0){go(1);e.preventDefault();}
     if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){go(-1);e.preventDefault();}
     if(e.key==='Home')show(0);
     if(e.key==='End')show(slides.length-1);
