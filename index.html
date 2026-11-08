@@ -143,6 +143,8 @@
 <div class="brand">颐和园 · 中国的世界文化遗产</div>
 <div class="frame"></div>
 <div class="start" id="start">点击开始放映</div>
+<audio id="birds" loop preload="auto" src="audio/鸟鸣.m4a"></audio>
+<audio id="bgm" loop preload="auto" src="audio/青山入画-配乐.m4a"></audio>
 <div class="tap" id="tap">轻触屏幕开始播放</div>
 
 <div class="slide s0 on">
@@ -355,6 +357,18 @@
     el.innerHTML=c?('<span class="ln">'+c.x.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')+'</span>'):"";
   }
 
+  var birds=document.getElementById('birds'), bgm=document.getElementById('bgm');
+  if(birds) birds.volume=.55; if(bgm) bgm.volume=.16;
+  function playBed(n){
+    if(n===0){
+      if(birds){try{birds.play()}catch(e){}}
+      if(bgm){try{bgm.pause()}catch(e){}}
+    }else{
+      if(birds){try{birds.pause()}catch(e){}}
+      if(bgm){try{bgm.play()}catch(e){}}
+    }
+  }
+
   function activate(k){
     var v=slides[k].querySelector('video'); if(!v) return;
     v.muted = false; v.volume = 1;
@@ -394,6 +408,7 @@
     activate(i);
     requestAnimationFrame(placeArrows);
     setTimeout(placeArrows, 120);
+    playBed(n);
   }
   function go(d){show(i+d);}
 
@@ -444,7 +459,7 @@
   }
   var startOv = document.getElementById('start');
   if(startOv){ startOv.addEventListener('click', function(){
-    startOv.classList.add('hide'); activate(i);
+    startOv.classList.add('hide'); activate(i); playBed(i);
   }); }
   activate(0);
 </script>
