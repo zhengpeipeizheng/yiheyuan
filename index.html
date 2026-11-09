@@ -541,7 +541,8 @@
     activate(i);
     requestAnimationFrame(placeArrows);
     setTimeout(placeArrows, 120);
-    playBed();
+    if(slides[i].classList.contains('end')){ if(birds) birds.pause(); }
+    else { playBed(); }
     if(pstate) pstate.classList.remove('show');
   }
   function go(d){show(i+d);}
